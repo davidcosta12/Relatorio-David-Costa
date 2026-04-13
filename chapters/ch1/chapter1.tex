@@ -1,0 +1,102 @@
+  \chapter{Introdução}
+  \label{cap:introdução}
+
+  O envelhecimento da população é um dos desafios sociais mais prementes da atualidade. Em Portugal, como na
+  generalidade dos países europeus, a proporção de pessoas com mais de 65 anos tem crescido de forma contínua, colocando
+   uma pressão crescente sobre os sistemas de saúde e de apoio social. Neste contexto, a tecnologia emerge como um vetor
+   de resposta: aplicações de assistência digital permitem alargar a capacidade de monitorização e acompanhamento de
+  idosos sem substituir a presença humana dos cuidadores.
+
+  O presente relatório descreve o trabalho realizado no âmbito do estágio curricular na empresa Kind Tech, uma
+  \textit{startup} que desenvolve um assistente de voz baseado em inteligência artificial para acompanhamento de pessoas
+   idosas institucionalizadas. A plataforma estabelece uma ponte entre o idoso (\textit{senior}), o cuidador
+  (\textit{caregiver}) e a administração da instituição, fornecendo conversas adaptadas, monitorização emocional e
+  gestão de medicação.
+
+  O estágio incide sobre três eixos técnicos fundamentais: o desenvolvimento e manutenção do serviço de
+  \textit{backend}, a estratégia de testes automatizados e o processo de \textit{deployment} em ambiente de produção.
+  Estas áreas constituem a espinha dorsal da plataforma e determinam a sua fiabilidade, segurança e capacidade de
+  evolução.
+
+  %----------------------------------------------------------------------------------------
+
+  \section{Enquadramento/Contexto}
+  \label{sec:enquadramento}
+
+  A Kind Tech desenvolve o CompyAI, uma aplicação \textit{full-stack} organizada como um \textit{monorepo} TypeScript com três
+  \textit{runtimes} independentes: um \textit{frontend} em React 19, um \textit{backend} principal em NestJS 11, e um
+  microserviço dedicado ao pipeline de inteligência artificial. Esta separação de responsabilidades permite escalar e
+  evoluir cada camada de forma independente.
+
+  O \textit{backend}, desenvolvido com NestJS sobre Fastify, constitui o ponto de entrada HTTP principal do sistema. É
+  responsável pela autenticação e gestão de sessões, pela persistência de dados em PostgreSQL via Drizzle ORM, pela
+  aplicação das regras de negócio e pelo encaminhamento autenticado de pedidos para o microserviço de IA. Este serviço
+  de IA integra três fornecedores externos: a Deepgram para reconhecimento de voz (\textit{Automatic Speech
+  Recognition}), a Amazon Bedrock com o modelo Claude Haiku 4.5 da Anthropic para geração de respostas em linguagem
+  natural, e a ElevenLabs para síntese de voz (\textit{Text-to-Speech}). O microserviço de IA não é exposto diretamente
+  à internet — apenas o \textit{backend} comunica com ele internamente.
+
+  A plataforma serve três perfis de utilizador com permissões distintas: o \textit{senior}, que interage exclusivamente
+  por voz; o \textit{caregiver}, que monitoriza o estado emocional e de saúde dos seus idosos através de um
+  \textit{dashboard}; e o administrador, que gere instituições, contas e configurações globais. Cada conversa de voz é
+  transcrita, processada pelo modelo de linguagem e persistida com um sumário estruturado que inclui tópicos abordados,
+  tom emocional e pontos-chave, servindo de base à monitorização longitudinal do bem-estar do idoso.
+
+  No plano do \textit{deployment}, a plataforma é distribuída em quatro contentores Docker orquestrados por Docker
+  Compose, alojados numa instância AWS EC2 com Ubuntu 24.04. O acesso externo é mediado por um servidor Nginx com
+  terminação TLS via Let's Encrypt, garantindo que o microserviço de IA e a base de dados PostgreSQL permanecem isolados
+   da internet pública. As migrações de base de dados são aplicadas automaticamente na inicialização do contentor de
+  \textit{backend}, eliminando passos manuais no processo de atualização.
+
+  No plano da qualidade de software, a estratégia de testes segue a pirâmide clássica: testes unitários sobre a lógica
+  de negócio dos serviços, testes de contrato sobre os schemas Zod partilhados entre \textit{frontend} e
+  \textit{backend}, testes de integração sobre os clientes dos serviços externos de IA, e testes de configuração de
+  \textit{deploy} que validam as variáveis de ambiente críticas antes de qualquer publicação em produção. O
+  \textit{framework} de testes adotado é o Vitest, com mocks baseados em \texttt{vi.fn()} para isolar a lógica de
+  negócio da camada de persistência.
+
+  O estágio insere-se, portanto, num produto em fase ativa de desenvolvimento, com utilizadores reais e requisitos de
+  fiabilidade e segurança concretos. O trabalho realizado contribui diretamente para a robustez da API, para a
+  automatização da validação de configurações críticas e para a sustentabilidade do processo de entrega contínua da
+  plataforma.
+
+
+%----------------------------------------------------------------------------------------
+
+\section{Descrição do Problema}
+O problema deve ser descrito de forma clara, de forma a que o leitor compreenda facilmente.
+
+
+\subsection{Objetivos} 
+Os objetivos devem ser descritos de forma detalhada devendo refletir a compreensão do estudante sobre o trabalho que foi desenvolvido.
+
+
+\subsection{Abordagem} 
+A aproximação preconizada para a solução do problema ou do tratamento do tema focado, onde estejam claras as contribuições previstas. O objetivo é identificar a abordagem adotada (usando referências bibliográficas) e como foi aplicada ao projeto. 
+
+
+\subsection{Contributos} 
+Devem ser apresentados os aspetos inovadores e de realce do trabalho, bem como a identificação dos benefícios trazidos para a organização (para a sociedade, para o ambiente,…). Devem ser identificadas as contribuições previstas (podendo usar estilo de apresentação por itens). 
+
+
+\subsection{Planeamento do trabalho}  
+Nesta subsecção deve ser apresentado o planeamento (cronograma, etc.) definido para a execução do projeto com indicação das tarefas, datas e principais fases (milestones).
+
+\textbf{(Poderá ir para Anexo.)}
+
+
+%----------------------------------------------------------------------------------------
+
+\section{Estrutura do relatório}
+
+Apresentação sucinta dos capítulos que fazem parte do relatório, descrevendo em poucos parágrafos o que cada um deles trata. 
+
+Para além da Introdução, este documento contém mais X capítulos.
+
+No Capítulo~\ref{cap:estado_da_arte}, é descrito o estado da arte e são apresentados trabalhos relacionados.
+
+No Capítulo~\ref{cap:analise_desenho}, ...
+
+\vspace{20mm} 
+
+\textbf{(Este capítulo deverá ter no máximo 5 páginas.)}
