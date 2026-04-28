@@ -1,33 +1,82 @@
-% 
-\chapter{Estado da Arte} % Main chapter title
-\label{cap:estado_da_arte} % For referencing the chapter elsewhere, use Chapter~\ref{cap:estado_da_arte}
+\chapter{Estado da Arte}
+\label{cap:estado_da_arte}
 
-Neste capítulo deve constar um resumo do trabalho relacionado e tecnologias existentes, com foco nos objetivos e contribuições para o problema a resolver. O capítulo deve demonstrar que o estudante procedeu a uma pesquisa bibliográfica para análise, tratamento e classificação preliminar. 
-
-Esta síntese deve ser apresentada com as respetivas citações (eg. \cite{Reference1} e referências (corretamente apresentadas no capítulo de Referências). 
-
+% TODO: Introdução curta — o objetivo deste capítulo é enquadrar as decisões técnicas
+% do estágio no contexto das práticas e ferramentas existentes, com foco em arquitetura
+% de backend, qualidade de software e entrega contínua.
 
 %----------------------------------------------------------------------------------------
-
-\section{Trabalhos relacionados} 
+\section{Trabalhos Relacionados}
 \label{sec:trabalhos_relacionados}
- 
-Rever e documentar o que está a ser feito atualmente na área em estudo em que se insere o trabalho de projeto. Esta secção é fundamental para justificar as contribuições para o estado de conhecimento atual. Pode ser utilizada uma tabela resumo de comparação das diferentes abordagens com uma análise crítica.
 
-
-\textbf{ATENÇÃO: Muito cuidado para não usar trabalho de outros autores, sem atribuir os devidos créditos citando-o através da respetiva referência. Pode ser utilizado a norma APA ou IEEE}.
-
+% Explorar dois eixos principais de trabalho relacionado:
+%
+% 1. PLATAFORMAS DE ASSISTÊNCIA DIGITAL A IDOSOS
+%    Analisar brevemente soluções existentes como ElliQ, Care.Coach e plataformas de
+%    telemedicina em contexto de ERPI (Estruturas Residenciais para Pessoas Idosas).
+%    O objetivo não é um estudo exaustivo destas plataformas, mas sim identificar
+%    a lacuna que o CompyAI preenche: a ausência de um canal de comunicação natural
+%    (voz) combinado com geração automática de informação estruturada para cuidadores.
+%    Esta análise justifica a existência do produto, não as escolhas técnicas.
+%
+% 2. ARQUITETURAS DE BACKEND PARA SISTEMAS MULTI-TENANT
+%    Rever trabalhos e práticas estabelecidas sobre arquitetura de APIs REST em sistemas
+%    com múltiplos perfis de utilizador e isolamento de dados por instituição (multi-tenant).
+%    Referir padrões como Clean Architecture \parencite{martin2017clean} e a separação
+%    entre camada de apresentação, lógica de negócio e acesso a dados.
+%    Relacionar com o contexto do CompyAI: três perfis de utilizador (admin, caregiver,
+%    senior) com permissões distintas e dados partilhados por instituição.
+%
+% Sugestão: tabela resumo comparando as soluções de assistência digital existentes
+% em termos de canal de interação, integração com cuidadores e modelo de dados.
 
 %----------------------------------------------------------------------------------------
-
-\section{Tecnologias existentes} 
+\section{Tecnologias e Práticas Existentes}
 \label{sec:tecnologias_existentes}
- 
-Rever e documentar tecnologias existentes de modo a justificar a escolha utilizada para implementação da solução. Pode ser utilizada uma tabela resumo de comparação das diferentes abordagens com uma análise crítica. Caso a tecnologia tenha sido imposta pela organização, deve ser adotada uma postura crítica e fazer uma comparação com outras tecnologias alternativas.
 
-
-\textbf{Nota}: Pode justificar-se acrescentar outra secção apresentando o contexto tecnológico na empresa onde é feita uma descrição centrada no projeto daquilo que já existe na empresa e que de alguma forma condicionou (positiva ou negativamente) o trabalho realizado.
-
-\vspace{20mm} 
-
-\textbf{(Este capítulo deverá ter no máximo 10 páginas)}
+% Organizar em torno das decisões técnicas mais relevantes para o trabalho do estágio.
+% Para cada área, comparar alternativas e justificar a escolha adotada.
+%
+% 1. FRAMEWORKS DE BACKEND
+%    Comparar NestJS, Express e Fastify em termos de estrutura, injeção de dependências,
+%    suporte a TypeScript e ecossistema de módulos.
+%    Justificar a escolha do NestJS pela estrutura modular que favorece separação de
+%    responsabilidades, pelo sistema de injeção de dependências nativo (que facilita
+%    testes unitários) e pela maturidade do ecossistema para APIs REST em TypeScript.
+%
+% 2. ORM E ACESSO A DADOS
+%    Comparar Drizzle ORM, Prisma e TypeORM em termos de type-safety, performance de
+%    queries, controlo sobre as migrações e compatibilidade com PostgreSQL.
+%    Justificar a escolha do Drizzle pela abordagem SQL-first (o schema é definido em
+%    TypeScript mas as queries ficam próximas do SQL) e pelo controlo granular sobre
+%    migrações — relevante para um ambiente de produção onde as migrações são aplicadas
+%    automaticamente no arranque do contentor.
+%
+% 3. AUTENTICAÇÃO E AUTORIZAÇÃO
+%    Comparar abordagens de autenticação stateless (JWT) vs. stateful (sessões em base
+%    de dados) para APIs REST com múltiplos perfis de utilizador.
+%    Justificar a escolha de JWT pela adequação a uma arquitetura de serviços
+%    independentes (o token carrega o perfil do utilizador, eliminando consultas à base
+%    de dados em cada pedido) e pela facilidade de integração com guards do NestJS para
+%    implementar RBAC (Role-Based Access Control).
+%
+% 4. ESTRATÉGIAS DE TESTES EM BACKEND NODE.JS
+%    Comparar Jest e Vitest como frameworks de testes para projetos TypeScript/ESM.
+%    Justificar a escolha do Vitest pela compatibilidade nativa com ESM, pela velocidade
+%    de execução e pela API compatível com Jest (curva de aprendizagem reduzida).
+%    Referir a pirâmide de testes \parencite{cohn2009succeeding} como modelo orientador
+%    da estratégia adotada.
+%
+% 5. CONTENTORIZAÇÃO E ENTREGA CONTÍNUA
+%    Comparar abordagens de deployment: servidor dedicado sem contentores, Docker com
+%    Compose, e orquestradores como Kubernetes.
+%    Justificar a escolha de Docker Compose para uma startup em fase inicial: complexidade
+%    operacional reduzida face ao Kubernetes, infraestrutura declarativa e versionada,
+%    e facilidade de recriar o ambiente de produção localmente.
+%    Referir \textcite{humble2010continuous} sobre os princípios de entrega contínua que
+%    orientaram a automação das migrações e o processo de atualização da plataforma.
+%
+% 6. INTELIGÊNCIA ARTIFICIAL (menção breve)
+%    Contextualizar brevemente o papel dos fornecedores externos de IA (STT, LLM, TTS)
+%    na plataforma, sem aprofundar as comparações tecnológicas — o foco do estágio foi
+%    a integração segura destes serviços no backend, não a sua avaliação comparativa.

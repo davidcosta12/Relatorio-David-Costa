@@ -19,56 +19,181 @@
 
 \refsection{0}
   \datalist[entry]{nyt/global//global/global/global}
-    \entry{Reference1}{article}{}{}
-      \name{author}{3}{}{%
-        {{un=0,uniquepart=base,hash=35dd546e1a595cf3f1a5d42e457d7ab2}{%
-           family={Hawthorn},
-           familyi={H\bibinitperiod},
-           given={C.\bibnamedelimi J.},
-           giveni={C\bibinitperiod\bibinitdelim J\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=6dc653e6078a3b1df642f5d6292422af}{%
-           family={Weber},
-           familyi={W\bibinitperiod},
-           given={K.\bibnamedelimi P.},
-           giveni={K\bibinitperiod\bibinitdelim P\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=fbe6cd033dd7ce55ac181480af90b44d}{%
-           family={Scholten},
-           familyi={S\bibinitperiod},
-           given={R.\bibnamedelimi E.},
-           giveni={R\bibinitperiod\bibinitdelim E\bibinitperiod},
+    \entry{beck2001agile}{misc}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=c5dcbe71f60a8d55caa11fe1493614d0}{%
+           family={Beck},
+           familyi={B\bibinitperiod},
+           given={Kent},
+           giveni={K\bibinitperiod},
            givenun=0}}%
       }
-      \strng{namehash}{fc0fa0daff8074801b6b613b587e985f}
-      \strng{fullhash}{fc0fa0daff8074801b6b613b587e985f}
-      \strng{fullhashraw}{fc0fa0daff8074801b6b613b587e985f}
-      \strng{bibnamehash}{fc0fa0daff8074801b6b613b587e985f}
-      \strng{authorbibnamehash}{fc0fa0daff8074801b6b613b587e985f}
-      \strng{authornamehash}{fc0fa0daff8074801b6b613b587e985f}
-      \strng{authorfullhash}{fc0fa0daff8074801b6b613b587e985f}
-      \strng{authorfullhashraw}{fc0fa0daff8074801b6b613b587e985f}
+      \strng{namehash}{e0e8f5a23c6124fea7c2eb7da286ea5e}
+      \strng{fullhash}{e0e8f5a23c6124fea7c2eb7da286ea5e}
+      \strng{fullhashraw}{e0e8f5a23c6124fea7c2eb7da286ea5e}
+      \strng{bibnamehash}{e0e8f5a23c6124fea7c2eb7da286ea5e}
+      \strng{authorbibnamehash}{e0e8f5a23c6124fea7c2eb7da286ea5e}
+      \strng{authornamehash}{e0e8f5a23c6124fea7c2eb7da286ea5e}
+      \strng{authorfullhash}{e0e8f5a23c6124fea7c2eb7da286ea5e}
+      \strng{authorfullhashraw}{e0e8f5a23c6124fea7c2eb7da286ea5e}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://agilemanifesto.org}}
+      \field{note}{(Último acesso em 27/04/2026)}
+      \field{title}{Manifesto for Agile Software Development}
+      \field{year}{2001}
+    \endentry
+    \entry{cohn2009succeeding}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=d33712bcde2d63bad054a832b61d01e8}{%
+           family={Cohn},
+           familyi={C\bibinitperiod},
+           given={Mike},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Addison-Wesley}%
+      }
+      \strng{namehash}{d33712bcde2d63bad054a832b61d01e8}
+      \strng{fullhash}{d33712bcde2d63bad054a832b61d01e8}
+      \strng{fullhashraw}{d33712bcde2d63bad054a832b61d01e8}
+      \strng{bibnamehash}{d33712bcde2d63bad054a832b61d01e8}
+      \strng{authorbibnamehash}{d33712bcde2d63bad054a832b61d01e8}
+      \strng{authornamehash}{d33712bcde2d63bad054a832b61d01e8}
+      \strng{authorfullhash}{d33712bcde2d63bad054a832b61d01e8}
+      \strng{authorfullhashraw}{d33712bcde2d63bad054a832b61d01e8}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{9780321579362}
+      \field{title}{Succeeding with Agile: Software Development Using Scrum}
+      \field{year}{2009}
+    \endentry
+    \entry{humble2010continuous}{book}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=9e89d796d06f74d6551850b1c3bff900}{%
+           family={Humble},
+           familyi={H\bibinitperiod},
+           given={Jez},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e88f486e16133b897ffb346a75f56d96}{%
+           family={Farley},
+           familyi={F\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Addison-Wesley}%
+      }
+      \strng{namehash}{06b8a2e32b3cda03592e143a7f761e36}
+      \strng{fullhash}{06b8a2e32b3cda03592e143a7f761e36}
+      \strng{fullhashraw}{06b8a2e32b3cda03592e143a7f761e36}
+      \strng{bibnamehash}{06b8a2e32b3cda03592e143a7f761e36}
+      \strng{authorbibnamehash}{06b8a2e32b3cda03592e143a7f761e36}
+      \strng{authornamehash}{06b8a2e32b3cda03592e143a7f761e36}
+      \strng{authorfullhash}{06b8a2e32b3cda03592e143a7f761e36}
+      \strng{authorfullhashraw}{06b8a2e32b3cda03592e143a7f761e36}
       \field{sortinit}{H}
       \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{abstract}{We have developed an enhanced Littrow configuration extended cavity diode laser (ECDL) that can be tuned without changing the direction of the output beam. The output of a conventional Littrow ECDL is reflected from a plane mirror fixed parallel to the tuning diffraction grating. Using a free-space Michelson wavemeter to measure the laser wavelength, we can tune the laser over a range greater than 10 nm without any alteration of alignment.}
-      \field{journaltitle}{Review of Scientific Instruments}
-      \field{month}{12}
-      \field{number}{12}
-      \field{title}{Littrow Configuration Tunable External Cavity Diode Laser with Fixed Direction Output Beam}
-      \field{volume}{72}
-      \field{year}{2001}
-      \field{pages}{4477\bibrangedash 4479}
-      \range{pages}{3}
-      \verb{urlraw}
-      \verb http://link.aip.org/link/?RSI/72/4477/1
-      \endverb
-      \verb{url}
-      \verb http://link.aip.org/link/?RSI/72/4477/1
-      \endverb
+      \field{isbn}{9780321601919}
+      \field{title}{Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation}
+      \field{year}{2010}
+    \endentry
+    \entry{ins2023envelhecimento}{misc}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=3393857e02095a6500025546392a06be}{%
+           family={{Instituto Nacional de Estatística}},
+           familyi={I\bibinitperiod}}}%
+      }
+      \strng{namehash}{3393857e02095a6500025546392a06be}
+      \strng{fullhash}{3393857e02095a6500025546392a06be}
+      \strng{fullhashraw}{3393857e02095a6500025546392a06be}
+      \strng{bibnamehash}{3393857e02095a6500025546392a06be}
+      \strng{authorbibnamehash}{3393857e02095a6500025546392a06be}
+      \strng{authornamehash}{3393857e02095a6500025546392a06be}
+      \strng{authorfullhash}{3393857e02095a6500025546392a06be}
+      \strng{authorfullhashraw}{3393857e02095a6500025546392a06be}
+      \field{sortinit}{I}
+      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.ine.pt}}
+      \field{note}{(Último acesso em 27/04/2026)}
+      \field{title}{Projeções de População Residente em Portugal 2020--2080}
+      \field{year}{2023}
+    \endentry
+    \entry{martin2017clean}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=6f41df64eb0dc4855be70172368604c2}{%
+           family={Martin},
+           familyi={M\bibinitperiod},
+           given={Robert\bibnamedelima C.},
+           giveni={R\bibinitperiod\bibinitdelim C\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Prentice Hall}%
+      }
+      \strng{namehash}{6f41df64eb0dc4855be70172368604c2}
+      \strng{fullhash}{6f41df64eb0dc4855be70172368604c2}
+      \strng{fullhashraw}{6f41df64eb0dc4855be70172368604c2}
+      \strng{bibnamehash}{6f41df64eb0dc4855be70172368604c2}
+      \strng{authorbibnamehash}{6f41df64eb0dc4855be70172368604c2}
+      \strng{authornamehash}{6f41df64eb0dc4855be70172368604c2}
+      \strng{authorfullhash}{6f41df64eb0dc4855be70172368604c2}
+      \strng{authorfullhashraw}{6f41df64eb0dc4855be70172368604c2}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{9780134494166}
+      \field{title}{Clean Architecture: A Craftsman's Guide to Software Structure and Design}
+      \field{year}{2017}
+    \endentry
+    \entry{who2021ageism}{misc}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=531217507bec092b6ec36c0f78f46736}{%
+           family={{World Health Organization}},
+           familyi={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{531217507bec092b6ec36c0f78f46736}
+      \strng{fullhash}{531217507bec092b6ec36c0f78f46736}
+      \strng{fullhashraw}{531217507bec092b6ec36c0f78f46736}
+      \strng{bibnamehash}{531217507bec092b6ec36c0f78f46736}
+      \strng{authorbibnamehash}{531217507bec092b6ec36c0f78f46736}
+      \strng{authornamehash}{531217507bec092b6ec36c0f78f46736}
+      \strng{authorfullhash}{531217507bec092b6ec36c0f78f46736}
+      \strng{authorfullhashraw}{531217507bec092b6ec36c0f78f46736}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.who.int/publications/i/item/9789240016866}}
+      \field{note}{(Último acesso em 27/04/2026)}
+      \field{title}{Global Report on Ageism}
+      \field{year}{2021}
     \endentry
   \enddatalist
 \endrefsection

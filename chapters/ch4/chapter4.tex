@@ -1,40 +1,154 @@
-\chapter{Implementação da Solução} 
+\chapter{Implementação da Solução}
 \label{cap:implementação}
 
-Este capítulo deve ser dedicado à apresentação de detalhes relacionados com o enquadramento e implementação das soluções preconizadas no capítulo anterior. Note-se, no entanto, que detalhes desnecessários à compreensão do trabalho devem ser remetidos para anexos. Dependendo do volume, a avaliação do trabalho pode ser incluída neste capítulo ou pode constituir um capítulo separado.
-
-
-%----------------------------------------------------------------------------------------
-
-\section{Descrição da implementação} 
-\label{sec:descrição_implementação}
-
-Descrever a implementação da solução proposta no capítulo anterior, podendo ser dadas explicações e evidências de soluções intercalares. Devem também ser descritas as tecnologias e metodologias utilizadas (software, sistemas de operação, linguagens, dispositivos ou outras ferramentas) e perspetiva crítica sobre as mesmas. 
-
-Esta secção descreve a implementação da solução proposta no capítulo anterior. 
-
-Alguns dos diagramas referidos na secção anterior podem aparecer nesta secção. Por exemplo, diagramas de classes ou diagramas de módulos, sendo detalhadas as operações de cada classe ou as funções de cada módulo (diagramas de atividades). 
-
-Devem também ser descritas as especificidades de implementação de acordo com o ambiente de desenvolvimento, plataforma e linguagem escolhida para o desenvolvimento e deve ser claro que o desenho apresentado anteriormente foi, de facto, adotado na implementação
-
+% TODO: Breve introdução ligando ao capítulo anterior — as decisões de arquitetura
+% são aqui concretizadas. O capítulo organiza-se em três eixos: o desenvolvimento
+% do backend (módulos, autenticação, API), a estratégia de testes, e a infraestrutura
+% de produção. O microserviço de IA é mencionado na medida em que o backend o integra.
 
 %----------------------------------------------------------------------------------------
+\section{Desenvolvimento do Backend}
+\label{sec:implementacao_backend}
 
-\section{Testes} 
-
-A descrição dos testes efetuados (e.g. unitários, funcionais, de integração, de sistema) pode ser feita nesta secção ou, caso não se justifique, na secção anterior.
-
+% 1. ORGANIZAÇÃO EM MÓDULOS
+%    Descrever como o NestJS estrutura a aplicação em módulos independentes:
+%    AuthModule, UsersModule, InstitutionsModule, SeniorsModule, CaregiversModule,
+%    ConversationsModule, MedicationsModule.
+%    Cada módulo encapsula o seu controlador, serviço e repositório — nenhum módulo
+%    acede diretamente ao repositório de outro; a comunicação é feita via injeção
+%    de serviços.
+%    Explicar como esta organização facilitou o desenvolvimento paralelo de funcionalidades
+%    e reduziu o risco de regressões entre módulos.
+%
+% 2. AUTENTICAÇÃO E AUTORIZAÇÃO
+%    Descrever o fluxo de autenticação: o utilizador envia credenciais, o AuthService
+%    valida contra a hash Argon2 armazenada, e emite um JWT com o perfil (role) e o
+%    identificador da instituição no payload.
+%    Explicar como os guards do NestJS consomem o JWT em cada pedido: o JwtAuthGuard
+%    valida a assinatura e extrai o payload; o RolesGuard verifica se o perfil do
+%    utilizador tem permissão para o endpoint em questão.
+%    Dar um exemplo concreto: o endpoint de criação de senior só é acessível a
+%    utilizadores com o papel ADMIN da mesma instituição.
+%    Mencionar a proteção contra acesso cruzado entre instituições: cada query ao
+%    repositório filtra sempre pelo institutionId extraído do JWT, garantindo que
+%    um administrador de uma instituição nunca acede a dados de outra.
+%
+% 3. MÓDULO DE ADMINISTRAÇÃO
+%    Descrever as funcionalidades implementadas: criação de caregivers e seniores,
+%    associação de seniores a caregivers, gestão do perfil clínico do senior (notas,
+%    medicação, preferências de interação com o assistente de IA).
+%    Destacar que o perfil do senior alimenta diretamente o contexto enviado ao
+%    microserviço de IA — o backend é responsável por construir e enviar esse contexto
+%    em cada pedido, sem que o microserviço de IA precise de consultar a base de dados.
+%
+% 4. VALIDAÇÃO DE DADOS E CONTRATOS DE API
+%    Descrever a estratégia de validação de input com schemas partilhados entre
+%    frontend e backend (definidos uma única vez, usados nos dois lados).
+%    Explicar como isto garante que o contrato de API é verificado em tempo de
+%    compilação TypeScript e em tempo de execução, eliminando uma categoria inteira
+%    de bugs de integração.
 
 %----------------------------------------------------------------------------------------
+\section{Integração com o Serviço de Inteligência Artificial}
+\label{sec:implementacao_ai}
 
-\section{Avaliação da solução} 
+% Descrever a integração do backend com o microserviço de IA de forma sucinta,
+% focando na responsabilidade do backend neste fluxo.
+%
+% O QUE O BACKEND FAZ NESTE FLUXO:
+%   - Autentica o pedido de voz do senior antes de o encaminhar para o microserviço.
+%   - Constrói o contexto da conversa (perfil do senior, historial recente, medicação)
+%     e envia-o junto com o áudio para o microserviço de IA.
+%   - Persiste a conversa e o sumário estruturado devolvido pelo microserviço.
+%   - Garante que o microserviço de IA nunca está exposto diretamente ao exterior —
+%     todo o tráfego passa pelo backend autenticado.
+%
+% Não é necessário detalhar o pipeline interno do microserviço (STT → LLM → TTS)
+% neste capítulo — uma descrição de alto nível é suficiente, dado que o foco do
+% estágio foi a camada de backend e infraestrutura.
 
-Nesta secção deve ser descrita a abordagem seguida para avaliar a solução, ou parte da solução, nomeadamente um ou mais requisitos de qualidade (e.g. desempenho, usabilidade). 
+%----------------------------------------------------------------------------------------
+\section{Estratégia de Testes}
+\label{sec:testes}
 
-São descritas experiências efetuadas e apresentados os dados/modelos utilizados, bem como os resultados obtidos. 
+% Descrever a pirâmide de testes implementada com exemplos concretos de cada nível.
+% O framework adotado é o Vitest pela compatibilidade nativa com TypeScript/ESM.
+%
+% NÍVEL 1 — TESTES UNITÁRIOS (base da pirâmide, maior volume):
+%   Cobertura da lógica de negócio dos serviços NestJS com mocks das dependências.
+%   As dependências (repositórios, clientes externos) são substituídas por mocks via
+%   vi.fn(), permitindo testar a lógica de negócio de forma isolada e determinística.
+%   Exemplos concretos a incluir:
+%     - Teste ao AuthService: verificar que a password é encriptada com Argon2 antes
+%       de persistir e que um JWT é emitido com o payload correto.
+%     - Teste ao SeniorService: verificar que a criação de um senior falha se já existir
+%       um utilizador com o mesmo email na mesma instituição.
+%     - Teste ao ConversationService: verificar que o sumário é persistido com os campos
+%       corretos após o microserviço de IA devolver a resposta.
+%
+% NÍVEL 2 — TESTES DE CONTRATO:
+%   Validação dos schemas de dados partilhados entre frontend e backend.
+%   Garantem que alterações ao modelo de dados (e.g. renomear um campo) são detetadas
+%   antes de chegarem a produção — o build falha se o contrato for quebrado.
+%
+% NÍVEL 3 — TESTES DE INTEGRAÇÃO:
+%   Testes sobre os clientes dos fornecedores externos de IA, executados em ambiente
+%   controlado com respostas pré-gravadas (fixtures).
+%   Verificam que o cliente lida corretamente com respostas de erro, timeouts e
+%   respostas parciais (streaming), sem depender da disponibilidade real dos serviços.
+%
+% NÍVEL 4 — TESTES DE CONFIGURAÇÃO DE DEPLOY:
+%   Validação das variáveis de ambiente críticas antes de qualquer publicação.
+%   O processo de deploy falha explicitamente se uma variável obrigatória estiver
+%   ausente ou com formato inválido, evitando falhas silenciosas em produção.
+%   Exemplo: verificar que DATABASE_URL tem o formato de connection string PostgreSQL,
+%   que as chaves de API dos fornecedores externos estão presentes e não são strings
+%   vazias, e que o segredo JWT tem comprimento mínimo de segurança.
+%
+% Incluir métricas de cobertura obtidas e análise do que ficou fora do âmbito dos testes.
 
-Devem ser descritos e avaliados os resultados obtidos. 
+%----------------------------------------------------------------------------------------
+\section{Infraestrutura e Processo de Entrega}
+\label{sec:deployment}
 
-Deve ser feita uma discussão sobre a adequação dos resultados obtidos relativamente aos planeados anteriormente. 
-
-Esta secção poderá não existir em alguns relatórios de projeto/estágio, mas nesse caso deverá ser dada uma justificação para tal. 
+% Esta secção é um dos focos centrais do estágio. Descrever com detalhe suficiente
+% para que o processo possa ser reproduzido por outro elemento da equipa.
+%
+% 1. CONTENTORIZAÇÃO E REDE
+%    Descrever a organização dos quatro contentores Docker (frontend/Nginx, backend,
+%    serviço de IA, PostgreSQL) e a rede interna que os interliga.
+%    Enfatizar que apenas o contentor de proxy está ligado à rede pública — os
+%    restantes comunicam exclusivamente na rede interna Docker, o que cumpre o
+%    requisito RNF01 de isolamento do serviço de IA e da base de dados.
+%
+% 2. PROXY E TLS
+%    Descrever a configuração do Nginx como reverse proxy: routing de pedidos para
+%    os serviços internos com base no path, terminação TLS com certificados Let's
+%    Encrypt via certbot, e headers de segurança (HSTS, X-Frame-Options, etc.).
+%    Mencionar a automatização da renovação de certificados.
+%
+% 3. ESTRATÉGIA BLUE-GREEN
+%    Descrever o modelo de dois ambientes paralelos (blue e green) e o processo de
+%    atualização sem downtime:
+%      a) o novo build é colocado no ambiente inativo;
+%      b) os testes de configuração de deploy são executados antes da promoção;
+%      c) o proxy é reconfigurado para apontar para o novo ambiente;
+%      d) o ambiente anterior fica em standby para rollback imediato se necessário.
+%    Explicar porque esta estratégia é especialmente relevante num serviço de cuidados
+%    em que uma indisponibilidade tem impacto direto em utilizadores vulneráveis.
+%
+% 4. MIGRAÇÕES AUTOMÁTICAS DE BASE DE DADOS
+%    Descrever como as migrações Drizzle são executadas automaticamente no arranque
+%    do contentor de backend, antes de o serviço começar a aceitar pedidos.
+%    Explicar as garantias desta abordagem: o código em execução é sempre compatível
+%    com o esquema de dados em vigor; não é possível colocar uma versão em produção
+%    com um esquema desatualizado.
+%    Mencionar os cuidados necessários para migrações destrutivas (e.g. remoção de
+%    colunas) em ambiente de produção com dados reais.
+%
+% 5. DESAFIOS ENCONTRADOS
+%    - Resolução de problemas de ordem de arranque dos contentores (o backend não pode
+%      iniciar antes da base de dados estar pronta) e a solução adotada.
+%    - Gestão de segredos em produção: variáveis de ambiente vs. ficheiros de secrets.
+%    - Configuração inicial da instância EC2: regras de firewall, user data scripts,
+%      e automatização do arranque dos serviços após reinício da instância.

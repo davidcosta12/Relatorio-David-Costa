@@ -1,25 +1,84 @@
 \chapter{Conclusões}
 \label{cap:conclusão}
 
-O capítulo de conclusões é um dos mais importantes do relatório, devendo ser apresentado um resumo dos resultados do trabalho efetivamente desenvolvido. \textit{\textbf{As conclusões devem basear-se nos resultados realmente obtidos}}. Devem enquadrar se os resultados obtidos com os objetivos enunciados e procurar extrair conclusões mais gerais, eventualmente sugeridas pelos resultados. Podem acompanhar as conclusões incluindo recomendações apropriadas resultantes do trabalho, nomeadamente sugerindo e justificando eventuais extensões e modificações futuras.
-
-
-%----------------------------------------------------------------------------------------
-
-\section{Objetivos concretizados}
-
-Nesta secção devem ser repetidos os objetivos apresentados no capítulo de introdução e para cada um deles deve ser descrito o seu grau de realização. Recomenda-se o uso de uma lista ou tabela, dado que facilita a leitura e compreensão
-
+% TODO: Parágrafo de abertura — resumir o trabalho em duas a três frases, com foco
+% no que foi construído do ponto de vista de engenharia de software: uma API de
+% backend robusta, uma estratégia de testes estruturada e uma infraestrutura de
+% produção reprodutível e segura.
 
 %----------------------------------------------------------------------------------------
+\section{Objetivos Concretizados}
+\label{sec:objetivos_concretizados}
 
-\section{Limitações e trabalho futuro}
-
-Nesta secção devem ser identificadas as limitações do trabalho realizado, fazendo uma análise autocrítica do trabalho realizado, bem como extrapolar eventuais direções de desenvolvimento futuro.
-
+% Retomar os três objetivos da introdução e avaliar o grau de concretização.
+% Sugestão: lista estruturada ou tabela com "Objetivo" e "Resultado".
+%
+% 1. DESENVOLVIMENTO DO SERVIÇO CENTRAL
+%    Concretizado: módulo de administração implementado e em produção, com gestão de
+%    instituições, contas de caregiver e senior, controlo de acesso por perfil (RBAC)
+%    e isolamento de dados por instituição. Fluxos de autenticação e onboarding
+%    validados com utilizadores reais. O backend garante que o microserviço de IA
+%    nunca é exposto diretamente, centralizando a autenticação e a construção
+%    do contexto de cada conversa.
+%
+% 2. ESTRATÉGIA DE TESTES AUTOMATIZADOS
+%    Concretizado: pirâmide de testes implementada com quatro níveis — unitários,
+%    de contrato, de integração e de configuração de deploy. Cobertura dos serviços
+%    de backend desenvolvidos durante o estágio com mocks das dependências externas.
+%    Limitação: cobertura dos fluxos que envolvem respostas em streaming do microserviço
+%    de IA ficou abaixo do desejado pela complexidade de simular respostas assíncronas
+%    em ambiente de teste.
+%
+% 3. PROCESSO DE ENTREGA EM PRODUÇÃO
+%    Concretizado: infraestrutura de produção operacional em AWS EC2 com contentores
+%    Docker, proxy Nginx com TLS, estratégia blue-green para atualizações sem downtime
+%    e migrações de base de dados automatizadas no arranque do contentor.
+%    O processo de deploy é declarativo, versionado e reprodutível por qualquer
+%    elemento da equipa.
 
 %----------------------------------------------------------------------------------------
+\section{Limitações e Trabalho Futuro}
+\label{sec:trabalho_futuro}
 
-\section{Apreciação final}
+% LIMITAÇÕES:
+%   - Ausência de pipeline de CI/CD automatizado: o processo de deploy continua
+%     semi-manual. As etapas de build, teste e promoção entre ambientes blue-green
+%     são executadas manualmente, o que aumenta o risco de erro humano.
+%   - Monitorização em produção: não existe ainda observabilidade estruturada —
+%     logs centralizados, métricas de latência por endpoint e alertas automáticos
+%     em caso de falha de um contentor ou fornecedor externo.
+%   - Testes de carga: a infraestrutura não foi validada sob carga simultânea de
+%     múltiplas conversas de voz, o que representa um risco desconhecido à medida
+%     que o número de instituições cresce.
+%
+% TRABALHO FUTURO:
+%   - Implementar um pipeline de CI/CD (e.g. GitHub Actions) que execute
+%     automaticamente os testes, construa as imagens Docker e promova o deploy
+%     após validação — eliminando a intervenção manual no processo de entrega.
+%   - Adicionar observabilidade: logs estruturados (e.g. com Pino) exportados para
+%     um agregador, métricas de latência e disponibilidade por serviço, e alertas
+%     automáticos para a equipa em caso de degradação.
+%   - Realizar testes de carga para determinar os limites de capacidade da
+%     infraestrutura atual e definir critérios de escalamento horizontal.
+%   - Evoluir a estratégia de testes para cobrir os fluxos de streaming do
+%     microserviço de IA com fixtures de respostas pré-gravadas.
+%   - Integração com sistemas de gestão de lares (ERP) existentes nas instituições,
+%     para eliminar duplicação de dados administrativos e facilitar a adoção.
 
-Esta secção deve fornecer uma opinião pessoal sobre o trabalho desenvolvido. 
+%----------------------------------------------------------------------------------------
+\section{Apreciação Final}
+\label{sec:apreciacao_final}
+
+% Reflexão pessoal. Pontos a abordar:
+%   - O que foi mais desafiante no eixo de backend: provavelmente a implementação
+%     do RBAC com isolamento multi-tenant, ou a gestão da ordem de operações no
+%     deploy (migrações antes de aceitar tráfego, blue-green sem downtime).
+%   - O que foi mais enriquecedor: trabalhar num produto em produção com utilizadores
+%     reais impõe uma responsabilidade diferente do ambiente académico — cada decisão
+%     de arquitetura tem consequências concretas.
+%   - A aprendizagem de que testes e infraestrutura não são atividades separadas do
+%     desenvolvimento: os testes de configuração de deploy e a automatização das
+%     migrações são código tanto quanto os endpoints da API.
+%   - Competências transversais: diagnosticar problemas em produção com informação
+%     limitada, comunicar decisões técnicas (e as suas trocas) a uma equipa pequena,
+%     e priorizar trabalho num contexto em que tudo parece urgente.

@@ -1,51 +1,105 @@
-\chapter{Análise e desenho da solução}
+\chapter{Análise e Desenho da Solução}
 \label{cap:analise_desenho}
 
-O estudante deve questionar se o relatório descreve o trabalho de forma suficientemente detalhada para que possa ser compreendido e reproduzido, se necessário, no futuro por outras pessoas da organização. 
-
-Todas as boas práticas abordadas no curso deverão ser utilizadas neste capítulo e no relatório em geral. 
-
-Note-se que este capítulo não deve conter exclusivamente a explicação da forma como métodos, técnicas, algoritmos, tecnologias, etc. foram usados, mas também o processo de compreensão do problema, a análise nos seus vários níveis, a identificação e especificação de requisitos, a modelação, a descrição dos componentes da solução, etc. 
-
-Recomenda-se que a descrição técnica siga uma abordagem que parta do “geral” (descrição inicial do problema) para o “particular” (descrição técnica completa e coerente da solução), sem saltar etapas.
-
-
-\textbf{Nota}: Pode justificar-se este capítulo ser divido em dois (Análise do Problema e Desenho da Solução).
-
-\textbf{Atenção}: A proposta de estrutura das subsecções seguintes adequa-se a projetos/estágios de desenvolvimento de produto ou sistema. O estudante deve, conjuntamente com o orientador, definir a estrutura de secções mais adequada ao seu projeto.
-
+% TODO: Introdução curta — este capítulo parte do domínio do problema (quem são os
+% utilizadores e o que fazem) e chega às decisões de arquitetura que guiaram a
+% implementação, com foco na camada de backend e na infraestrutura.
 
 %----------------------------------------------------------------------------------------
-
-\section{Domínio do problema}
+\section{Domínio do Problema}
 \label{sec:domínio_problema}
 
-Devem ser especificados os conceitos de domínio do problema através de artefactos adequados (e.g. glossário, modelo de domínio).
-
+% Apresentar um glossário dos conceitos centrais da plataforma e um modelo de domínio.
+%
+% CONCEITOS A DEFINIR:
+%   - Instituição: entidade que aloja idosos e subscreve o serviço CompyAI.
+%   - Senior: utente da instituição; interage com o assistente exclusivamente por voz.
+%   - Caregiver: profissional de saúde responsável por um conjunto de seniores;
+%     consulta o dashboard de monitorização.
+%   - Administrador: gere a instituição na plataforma (contas, perfis, configurações).
+%   - Conversa: sessão de interação por voz entre o senior e o assistente de IA.
+%   - Sumário: artefacto estruturado gerado automaticamente após cada conversa,
+%     com tópicos abordados, tom emocional e pontos-chave.
+%   - Medicação: registo dos medicamentos do senior com horários e confirmações de toma.
+%
+% MODELO DE DOMÍNIO:
+%   Diagrama UML de classes simplificado com as relações entre Instituição,
+%   Administrador, Caregiver, Senior, Conversa e Sumário.
+%   Destacar que um Caregiver gere múltiplos Seniores e que cada Senior tem um
+%   histórico de Conversas com os respetivos Sumários — esta estrutura determina
+%   diretamente o modelo de dados relacional.
 
 %----------------------------------------------------------------------------------------
-
-\section{Requisitos funcionais e não funcionais} 
+\section{Requisitos Funcionais e Não Funcionais}
 \label{sec:requisitos}
 
-Especificar os principais requisitos funcionais e não funcionais do sistema. 
-
-O levantamento de requisitos pode ser obtido dialogando com o cliente, de forma a identificar as funcionalidades de alto nível pretendidas no sistema para cada perfil de utilizador, recorrendo a diagramas de casos de utilização e/ou diagramas de domínio. 
-
-De um modo geral, pretende-se a documentação final dos requisitos (e não a sua evolução no tempo).
-
+% REQUISITOS FUNCIONAIS (por perfil de utilizador):
+%
+% Senior:
+%   RF01 — Iniciar e terminar uma conversa por voz com o assistente.
+%   RF02 — Receber respostas adaptadas ao seu perfil (tom, vocabulário, duração).
+%   RF03 — Ser lembrado de tomar medicação nos horários definidos.
+%
+% Caregiver:
+%   RF04 — Consultar o historial de conversas dos seniores sob a sua responsabilidade.
+%   RF05 — Visualizar sumários estruturados de cada conversa.
+%   RF06 — Receber alertas quando o sistema deteta sinais de mal-estar.
+%
+% Administrador:
+%   RF07 — Criar e gerir contas de caregiver e senior associadas à sua instituição.
+%   RF08 — Configurar o perfil do senior (notas clínicas, medicação, preferências de voz)
+%          que serve de contexto ao modelo de IA.
+%   RF09 — Consultar estatísticas de utilização da plataforma.
+%
+% REQUISITOS NÃO FUNCIONAIS:
+%   RNF01 — Segurança: autenticação por JWT, autorização por papel (RBAC), TLS em todas
+%            as comunicações externas, isolamento do microserviço de IA da internet pública.
+%   RNF02 — Disponibilidade: serviço operacional 24/7, dado o contexto de cuidados contínuos.
+%   RNF03 — Latência: a API de backend deve responder em menos de 200ms nos endpoints
+%            críticos; o pipeline de voz ponta-a-ponta deve produzir a primeira resposta
+%            audível em menos de 3 segundos.
+%   RNF04 — Privacidade: conformidade com o RGPD no tratamento de dados de saúde;
+%            os dados dos utentes não devem sair da infraestrutura controlada pela empresa.
+%   RNF05 — Manutenibilidade: arquitetura em camadas com cobertura de testes automatizados,
+%            migrações de base de dados versionadas e processo de deploy reprodutível.
 
 %----------------------------------------------------------------------------------------
-
-\section{Desenho} 
+\section{Arquitetura da Solução}
 \label{sec:desenho}
 
-Dependendo do volume, o desenho da solução pode ser incluída neste capítulo (uma secção) ou pode constituir um capítulo separado.
-
-O estudante deve especificar a arquitetura global da solução (diagramas de componentes e outros se necessário, como por exemplo, diagramas de implantação caso existam instalações) e deve apresentar uma justificação para a arquitetura que faça referência aos requisitos. 
-Se foram estudadas alternativas arquiteturais, estas devem ser apresentadas.
-
-Apresentar uma especificação global do sistema com base em um ou mais diagramas de Classes e apresentar especificações adicionais em casos que o justifiquem (e.g. diagramas de estados para classes com comportamento relativamente complexo).
-
-Especificar o modelo de dados, caso a solução contemple esse aspeto, e justificar o modelo de dados com base nos artefactos anteriores (particularmente o diagrama de classes).
-A aplicação de padrões e boas práticas é recomendada.
+% VISÃO GERAL DO SISTEMA:
+%   Diagrama de componentes com os três serviços (interface web, backend, microserviço de IA),
+%   a base de dados PostgreSQL e os fornecedores externos de IA.
+%   Enfatizar que o microserviço de IA não está exposto à internet — apenas o backend
+%   comunica com ele numa rede interna Docker, o que limita a superfície de ataque.
+%
+% ARQUITETURA INTERNA DO BACKEND (foco principal):
+%   Diagrama de módulos mostrando a separação explícita em três camadas:
+%     - Controladores (HTTP): recebem e validam os pedidos, aplicam guards de autenticação
+%       e autorização, e delegam na camada de serviços.
+%     - Serviços (lógica de negócio): contêm as regras do domínio, independentes de
+%       frameworks e de infraestrutura — testáveis de forma isolada com mocks.
+%     - Repositórios (infraestrutura): encapsulam o acesso à base de dados via Drizzle ORM;
+%       a camada de serviços nunca conhece os detalhes de persistência.
+%   Justificar esta separação: cada camada pode evoluir e ser testada independentemente;
+%   substituir o ORM ou a base de dados não exige alterações na lógica de negócio.
+%
+% MODELO DE DADOS:
+%   Diagrama entidade-relação com as tabelas principais:
+%     users, institutions, admins, caregivers, seniors, conversations,
+%     conversation_summaries, medications.
+%   Decisões de modelação a justificar:
+%     - A tabela users centraliza autenticação; admins/caregivers/seniors são extensões
+%       com campos específicos de cada perfil (padrão de herança em tabelas separadas).
+%     - A tabela conversation_summary é separada de conversations porque o sumário é
+%       gerado de forma assíncrona no final da sessão — a conversa existe e é persistida
+%       em tempo real, o sumário é produzido depois.
+%     - Todas as entidades de negócio têm uma foreign key para institutions, garantindo
+%       isolamento de dados entre instituições diferentes (multi-tenancy por linha).
+%
+% ARQUITETURA DE INFRAESTRUTURA:
+%   Diagrama de deployment mostrando os quatro contentores Docker (frontend, backend,
+%   serviço de IA, PostgreSQL), a rede interna que os interliga, a instância EC2,
+%   o proxy Nginx e a terminação TLS.
+%   Mencionar a separação entre rede pública (apenas o Nginx está exposto) e rede
+%   interna Docker (backend, serviço de IA e base de dados).

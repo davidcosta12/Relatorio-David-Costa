@@ -1,102 +1,217 @@
-  \chapter{Introdução}
-  \label{cap:introdução}
+\chapter{Introdução}
+\label{cap:introdução}
 
-  O envelhecimento da população é um dos desafios sociais mais prementes da atualidade. Em Portugal, como na
-  generalidade dos países europeus, a proporção de pessoas com mais de 65 anos tem crescido de forma contínua, colocando
-   uma pressão crescente sobre os sistemas de saúde e de apoio social. Neste contexto, a tecnologia emerge como um vetor
-   de resposta: aplicações de assistência digital permitem alargar a capacidade de monitorização e acompanhamento de
-  idosos sem substituir a presença humana dos cuidadores.
+O envelhecimento da população é um dos desafios sociais mais prementes da atualidade. Em
+Portugal, como na generalidade dos países europeus, a proporção de pessoas com mais de 65 anos
+tem crescido de forma contínua, colocando uma pressão crescente sobre os sistemas de saúde e
+de apoio social \parencite{ins2023envelhecimento}. Neste contexto, a tecnologia emerge como um
+vetor de resposta: soluções de assistência digital permitem alargar a capacidade de
+monitorização e acompanhamento de idosos sem substituir a presença humana dos cuidadores.
 
-  O presente relatório descreve o trabalho realizado no âmbito do estágio curricular na empresa Kind Tech, uma
-  \textit{startup} que desenvolve um assistente de voz baseado em inteligência artificial para acompanhamento de pessoas
-   idosas institucionalizadas. A plataforma estabelece uma ponte entre o idoso (\textit{senior}), o cuidador
-  (\textit{caregiver}) e a administração da instituição, fornecendo conversas adaptadas, monitorização emocional e
-  gestão de medicação.
+O presente relatório descreve o trabalho realizado no âmbito do estágio curricular na empresa
+Kind Tech, uma \textit{startup} portuguesa que desenvolve o CompyAI, um assistente de voz
+baseado em inteligência artificial para acompanhamento de pessoas idosas institucionalizadas.
+A plataforma estabelece uma ponte entre o idoso, o cuidador e a administração da instituição,
+oferecendo um canal de comunicação natural e acessível para o utente, e informação estruturada
+sobre o seu bem-estar para os profissionais que o acompanham.
 
-  O estágio incide sobre três eixos técnicos fundamentais: o desenvolvimento e manutenção do serviço de
-  \textit{backend}, a estratégia de testes automatizados e o processo de \textit{deployment} em ambiente de produção.
-  Estas áreas constituem a espinha dorsal da plataforma e determinam a sua fiabilidade, segurança e capacidade de
-  evolução.
-
-  %----------------------------------------------------------------------------------------
-
-  \section{Enquadramento/Contexto}
-  \label{sec:enquadramento}
-
-  A Kind Tech desenvolve o CompyAI, uma aplicação \textit{full-stack} organizada como um \textit{monorepo} TypeScript com três
-  \textit{runtimes} independentes: um \textit{frontend} em React 19, um \textit{backend} principal em NestJS 11, e um
-  microserviço dedicado ao pipeline de inteligência artificial. Esta separação de responsabilidades permite escalar e
-  evoluir cada camada de forma independente.
-
-  O \textit{backend}, desenvolvido com NestJS sobre Fastify, constitui o ponto de entrada HTTP principal do sistema. É
-  responsável pela autenticação e gestão de sessões, pela persistência de dados em PostgreSQL via Drizzle ORM, pela
-  aplicação das regras de negócio e pelo encaminhamento autenticado de pedidos para o microserviço de IA. Este serviço
-  de IA integra três fornecedores externos: a Deepgram para reconhecimento de voz (\textit{Automatic Speech
-  Recognition}), a Amazon Bedrock com o modelo Claude Haiku 4.5 da Anthropic para geração de respostas em linguagem
-  natural, e a ElevenLabs para síntese de voz (\textit{Text-to-Speech}). O microserviço de IA não é exposto diretamente
-  à internet — apenas o \textit{backend} comunica com ele internamente.
-
-  A plataforma serve três perfis de utilizador com permissões distintas: o \textit{senior}, que interage exclusivamente
-  por voz; o \textit{caregiver}, que monitoriza o estado emocional e de saúde dos seus idosos através de um
-  \textit{dashboard}; e o administrador, que gere instituições, contas e configurações globais. Cada conversa de voz é
-  transcrita, processada pelo modelo de linguagem e persistida com um sumário estruturado que inclui tópicos abordados,
-  tom emocional e pontos-chave, servindo de base à monitorização longitudinal do bem-estar do idoso.
-
-  No plano do \textit{deployment}, a plataforma é distribuída em quatro contentores Docker orquestrados por Docker
-  Compose, alojados numa instância AWS EC2 com Ubuntu 24.04. O acesso externo é mediado por um servidor Nginx com
-  terminação TLS via Let's Encrypt, garantindo que o microserviço de IA e a base de dados PostgreSQL permanecem isolados
-   da internet pública. As migrações de base de dados são aplicadas automaticamente na inicialização do contentor de
-  \textit{backend}, eliminando passos manuais no processo de atualização.
-
-  No plano da qualidade de software, a estratégia de testes segue a pirâmide clássica: testes unitários sobre a lógica
-  de negócio dos serviços, testes de contrato sobre os schemas Zod partilhados entre \textit{frontend} e
-  \textit{backend}, testes de integração sobre os clientes dos serviços externos de IA, e testes de configuração de
-  \textit{deploy} que validam as variáveis de ambiente críticas antes de qualquer publicação em produção. O
-  \textit{framework} de testes adotado é o Vitest, com mocks baseados em \texttt{vi.fn()} para isolar a lógica de
-  negócio da camada de persistência.
-
-  O estágio insere-se, portanto, num produto em fase ativa de desenvolvimento, com utilizadores reais e requisitos de
-  fiabilidade e segurança concretos. O trabalho realizado contribui diretamente para a robustez da API, para a
-  automatização da validação de configurações críticas e para a sustentabilidade do processo de entrega contínua da
-  plataforma.
-
+O estágio incidiu sobre o desenvolvimento da plataforma enquanto produto de software, com
+foco na robustez da camada de serviços, na definição de uma estratégia de testes automatizados
+e na construção de um processo de entrega em ambiente de produção. Estas três dimensões
+constituem a espinha dorsal da engenharia de software do produto e determinam a sua
+fiabilidade, segurança e capacidade de evolução sustentada.
 
 %----------------------------------------------------------------------------------------
+\section{Enquadramento e Contexto}
+\label{sec:enquadramento}
 
+A Kind Tech desenvolve o CompyAI como uma plataforma \textit{full-stack} com três camadas de
+serviço independentes: uma interface de utilizador acessível a partir de qualquer dispositivo
+com navegador web, um serviço central responsável pela lógica de negócio e pela persistência
+de dados, e um microserviço dedicado ao processamento de inteligência artificial. Esta
+separação de responsabilidades permite que cada camada evolua de forma autónoma, sem introduzir
+dependências desnecessárias entre domínios distintos do sistema.
+
+O fluxo principal da aplicação começa quando o idoso inicia uma conversa por voz. O áudio é
+capturado no dispositivo e enviado para o serviço de inteligência artificial, que o transcreve
+para texto, gera uma resposta em linguagem natural adequada ao perfil e ao historial do
+utilizador, e converte essa resposta novamente em fala. Em paralelo, o serviço central persiste
+a conversa e produz um sumário estruturado com os tópicos abordados, o tom emocional
+detetado e os pontos-chave identificados, que fica disponível para consulta pelo cuidador.
+O microserviço de inteligência artificial não está exposto diretamente à internet: apenas o
+serviço central comunica com ele, numa rede interna isolada, o que reduz a superfície de
+ataque do sistema.
+
+A plataforma serve três perfis de utilizador com responsabilidades e interfaces distintas.
+O \textbf{idoso} interage exclusivamente por voz, sem necessidade de literacia digital; o
+assistente adapta o seu tom, vocabulário e duração das respostas ao perfil individual de cada
+utilizador. O \textbf{cuidador} acede a um painel de monitorização onde visualiza o historial
+de conversas, os sumários de bem-estar e os alertas gerados pelo sistema para os utentes sob
+a sua responsabilidade. O \textbf{administrador} gere a instituição: cria e configura contas,
+define parâmetros globais e tem uma visão transversal sobre toda a população da instituição.
+Esta estrutura de papéis garante que cada utilizador acede apenas à informação e às ações
+relevantes para a sua função.
+
+No plano da infraestrutura, a plataforma é distribuída como um conjunto de serviços
+contentorizados, alojados na nuvem, com acesso externo protegido por TLS. As atualizações
+da aplicação e da base de dados são geridas de forma automatizada, minimizando a intervenção
+manual e o risco de inconsistências entre versões do código e do esquema de dados.
+
+No plano da qualidade de software, a estratégia de testes cobre diferentes níveis de
+abstração: desde a validação da lógica de negócio isolada de dependências externas, até à
+verificação dos contratos de dados partilhados entre serviços, passando pela validação das
+integrações com fornecedores externos e pela confirmação de que as configurações críticas de
+produção estão corretas antes de qualquer publicação.
+
+O estágio insere-se, portanto, num produto em fase ativa de desenvolvimento, com utilizadores
+reais e requisitos concretos de fiabilidade e segurança. O trabalho realizado contribui
+diretamente para a maturidade da plataforma enquanto produto de software pronto para crescer.
+
+%----------------------------------------------------------------------------------------
 \section{Descrição do Problema}
-O problema deve ser descrito de forma clara, de forma a que o leitor compreenda facilmente.
+\label{sec:problema}
 
+As instituições de apoio a idosos debatem-se com um desequilíbrio estrutural entre a procura
+de acompanhamento personalizado e os recursos humanos disponíveis. Um cuidador gere
+frequentemente dezenas de utentes em simultâneo, tornando inviável uma interação contínua e
+individualizada com cada um. Esta realidade traduz-se em isolamento social e em défice de
+estimulação cognitiva para os idosos, com consequências documentadas no seu bem-estar físico
+e mental \parencite{who2021ageism}.
 
-\subsection{Objetivos} 
-Os objetivos devem ser descritos de forma detalhada devendo refletir a compreensão do estudante sobre o trabalho que foi desenvolvido.
+As soluções tecnológicas existentes, aplicações de lembretes de medicação, sistemas de
+alarme e plataformas de videochamada, não abordam o problema de forma integrada. Não
+estabelecem um canal de comunicação natural e acessível para utilizadores com literacia
+digital reduzida, não produzem informação estruturada e contínua sobre o estado emocional do
+utente, e não oferecem ao cuidador uma visão longitudinal do bem-estar de cada idoso. A
+lacuna não é apenas tecnológica; é também de desenho: as soluções existentes foram concebidas
+para utilizadores com capacidades digitais que muitos idosos institucionalizados não possuem.
 
+O CompyAI responde a este problema através de um assistente conversacional por voz — o canal
+de comunicação mais natural e universal — que não exige qualquer interação com ecrãs ou
+teclados. Em simultâneo, cada conversa é automaticamente analisada e transformada em
+informação estruturada acessível ao cuidador, criando um registo longitudinal do bem-estar do
+idoso sem impor trabalho adicional a nenhum dos intervenientes.
 
-\subsection{Abordagem} 
-A aproximação preconizada para a solução do problema ou do tratamento do tema focado, onde estejam claras as contribuições previstas. O objetivo é identificar a abordagem adotada (usando referências bibliográficas) e como foi aplicada ao projeto. 
+O desafio de engenharia de software consiste em construir uma plataforma que responda a três
+requisitos em tensão: baixa latência nas interações de voz, para que a conversa seja fluida e
+natural; integridade e confidencialidade dos dados clínicos, dado o carácter sensível da
+informação processada; e fiabilidade de um serviço em produção contínua, onde uma
+indisponibilidade tem impacto direto em utilizadores vulneráveis.
 
+\subsection{Objetivos}
+\label{subsec:objetivos}
 
-\subsection{Contributos} 
-Devem ser apresentados os aspetos inovadores e de realce do trabalho, bem como a identificação dos benefícios trazidos para a organização (para a sociedade, para o ambiente,…). Devem ser identificadas as contribuições previstas (podendo usar estilo de apresentação por itens). 
+O estágio tem como objetivo principal contribuir para a consolidação do CompyAI enquanto
+produto de software robusto, seguro e evolutível. Este objetivo desdobra-se nos seguintes
+objetivos específicos:
 
+\begin{itemize}
+    \item \textbf{Desenvolvimento do serviço central:} implementar e manter as
+    funcionalidades da camada de serviços da plataforma, incluindo autenticação, gestão de
+    perfis de utilizador, lógica de negócio associada às conversas e módulos de administração
+    de instituições e contas.
 
-\subsection{Planeamento do trabalho}  
-Nesta subsecção deve ser apresentado o planeamento (cronograma, etc.) definido para a execução do projeto com indicação das tarefas, datas e principais fases (milestones).
+    \item \textbf{Estratégia de testes automatizados:} definir e implementar uma abordagem de
+    testes que cubra múltiplos níveis — lógica de negócio, contratos de dados, integrações
+    externas e validação de configurações de produção — de forma a reduzir o risco de
+    regressões e aumentar a confiança no processo de entrega.
 
-\textbf{(Poderá ir para Anexo.)}
+    \item \textbf{Processo de entrega em produção:} conceber e operacionalizar a
+    infraestrutura de produção na nuvem, incluindo a orquestração dos serviços, a segurança
+    das comunicações e a automatização das atualizações do sistema.
+\end{itemize}
 
+\subsection{Abordagem}
+\label{subsec:abordagem}
+
+O desenvolvimento da plataforma segue uma metodologia ágil com iterações curtas, permitindo
+incorporar rapidamente \textit{feedback} e ajustar prioridades face a novos requisitos
+\parencite{beck2001agile}. Cada funcionalidade é desenvolvida de forma isolada, integrada na
+base de código após revisão, e promovida a produção de forma controlada.
+
+A arquitetura do serviço central foi desenhada com separação explícita entre a camada de
+apresentação — que recebe e valida os pedidos externos —, a camada de aplicação — onde reside
+a lógica de negócio —, e a camada de infraestrutura — que encapsula as dependências externas
+como a base de dados e os serviços de terceiros \parencite{martin2017clean}. Esta organização
+facilita a testabilidade de cada camada de forma independente e permite substituir
+implementações concretas sem alterar a lógica de negócio.
+
+A estratégia de testes segue a pirâmide proposta por \textcite{cohn2009succeeding},
+privilegiando testes unitários rápidos na base e reservando os testes de integração para as
+fronteiras do sistema, onde o risco de incompatibilidade com dependências externas é mais
+elevado.
+
+O processo de entrega baseia-se num modelo de infraestrutura declarativa, em que o estado
+desejado do sistema de produção é descrito em ficheiros de configuração versionados, e não
+configurado manualmente \parencite{humble2010continuous}. Isto garante que qualquer membro da
+equipa pode recriar o ambiente de produção de forma determinística e que as atualizações são
+reprodutíveis e auditáveis.
+
+\subsection{Contributos}
+\label{subsec:contributos}
+
+O trabalho realizado no âmbito deste estágio traduz-se nos seguintes contributos para a
+organização e para o produto:
+
+\begin{itemize}
+    \item Implementação do módulo de administração da plataforma, com gestão de instituições,
+    contas de cuidadores e perfis de idosos, e controlo de acesso por perfil de utilizador.
+
+    \item Definição e implementação de uma suite de testes automatizados que cobre os
+    diferentes níveis da pirâmide de testes, aumentando a cobertura e reduzindo o risco de
+    regressões em futuras iterações.
+
+    \item Construção da infraestrutura de produção na nuvem, tornando o processo de entrega
+    reprodutível, documentado e independente de intervenção manual.
+
+    \item Automatização das atualizações do esquema de base de dados no arranque do sistema,
+    eliminando um passo manual crítico no processo de atualização da plataforma.
+
+    \item Contribuição para a maturidade do processo de entrega de software da equipa,
+    estabelecendo práticas que a empresa poderá manter e evoluir de forma autónoma.
+\end{itemize}
+
+\subsection{Planeamento do Trabalho}
+\label{subsec:planeamento}
+
+O estágio decorreu entre outubro de 2025 e junho de 2026, com uma duração total de
+aproximadamente 36 semanas, organizadas em quatro fases principais. O cronograma detalhado
+encontra-se no Anexo~\ref{appendix:A}.
+
+A \textbf{Fase 1} (semanas 1–6) correspondeu à integração na equipa, à familiarização com o
+repositório e à compreensão da arquitetura e das práticas de desenvolvimento vigentes.
+A \textbf{Fase 2} (semanas 7–18) centrou-se no desenvolvimento ativo de funcionalidades do
+serviço central, nomeadamente os módulos de administração e os fluxos de integração de novos
+utilizadores na plataforma.
+A \textbf{Fase 3} (semanas 19–28) foi dedicada à estratégia de testes e à construção da
+infraestrutura de produção.
+A \textbf{Fase 4} (semanas 29–36) incidiu na estabilização da plataforma, na correção de
+defeitos identificados em ambiente de produção e na elaboração do presente relatório.
 
 %----------------------------------------------------------------------------------------
+\section{Estrutura do Relatório}
+\label{sec:estrutura}
 
-\section{Estrutura do relatório}
+Para além da presente introdução, este documento contém mais quatro capítulos.
 
-Apresentação sucinta dos capítulos que fazem parte do relatório, descrevendo em poucos parágrafos o que cada um deles trata. 
+No Capítulo~\ref{cap:estado_da_arte} é apresentada a revisão do estado da arte,
+enquadrando o CompyAI no panorama das soluções de assistência digital a idosos e dos padrões
+de arquitetura de software relevantes para o trabalho desenvolvido. São analisadas abordagens
+existentes à assistência por voz em contexto de saúde, modelos de arquitetura para sistemas
+com múltiplos serviços independentes, e as práticas de qualidade de software aplicáveis ao
+contexto do projeto.
 
-Para além da Introdução, este documento contém mais X capítulos.
+No Capítulo~\ref{cap:analise_desenho} é descrita a análise e o desenho da solução,
+apresentando os requisitos funcionais e não funcionais da plataforma, a arquitetura do sistema
+e as principais decisões de desenho que orientaram a implementação. É dado especial destaque
+à organização dos serviços, ao modelo de dados e à estratégia de segurança adotada.
 
-No Capítulo~\ref{cap:estado_da_arte}, é descrito o estado da arte e são apresentados trabalhos relacionados.
+No Capítulo~\ref{cap:implementação} são apresentados os detalhes das funcionalidades
+desenvolvidas durante o estágio: o módulo de administração da plataforma, a suite de testes
+automatizados e a infraestrutura de entrega em produção. São discutidos os desafios encontrados
+e as soluções adotadas em cada um destes domínios.
 
-No Capítulo~\ref{cap:analise_desenho}, ...
-
-\vspace{20mm} 
-
-\textbf{(Este capítulo deverá ter no máximo 5 páginas.)}
+No Capítulo~\ref{cap:conclusão} são apresentadas as conclusões do trabalho, com uma avaliação
+crítica dos resultados obtidos face aos objetivos definidos, uma reflexão sobre as
+aprendizagens adquiridas e a identificação de trabalho futuro que poderá dar continuidade ao
+que foi desenvolvido durante o estágio.

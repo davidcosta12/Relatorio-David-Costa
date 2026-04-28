@@ -1,26 +1,27 @@
 \babel@toc {portuguese}{}\relax 
 \contentsline {chapter}{\numberline {1}Introdução}{1}{chapter.12}%
-\contentsline {section}{\numberline {1.1}Enquadramento/Contexto}{1}{section.13}%
+\contentsline {section}{\numberline {1.1}Enquadramento e Contexto}{1}{section.13}%
 \contentsline {section}{\numberline {1.2}Descrição do Problema}{2}{section.14}%
-\contentsline {subsection}{\numberline {1.2.1}Objetivos}{2}{subsection.15}%
-\contentsline {subsection}{\numberline {1.2.2}Abordagem}{2}{subsection.16}%
-\contentsline {subsection}{\numberline {1.2.3}Contributos}{2}{subsection.17}%
-\contentsline {subsection}{\numberline {1.2.4}Planeamento do trabalho}{2}{subsection.18}%
-\contentsline {section}{\numberline {1.3}Estrutura do relatório}{3}{section.19}%
-\contentsline {chapter}{\numberline {2}Estado da Arte}{5}{chapter.20}%
-\contentsline {section}{\numberline {2.1}Trabalhos relacionados}{5}{section.21}%
-\contentsline {section}{\numberline {2.2}Tecnologias existentes}{5}{section.22}%
-\contentsline {chapter}{\numberline {3}Análise e desenho da solução}{7}{chapter.23}%
-\contentsline {section}{\numberline {3.1}Domínio do problema}{7}{section.24}%
-\contentsline {section}{\numberline {3.2}Requisitos funcionais e não funcionais}{7}{section.25}%
-\contentsline {section}{\numberline {3.3}Desenho}{8}{section.26}%
-\contentsline {chapter}{\numberline {4}Implementação da Solução}{9}{chapter.27}%
-\contentsline {section}{\numberline {4.1}Descrição da implementação}{9}{section.28}%
-\contentsline {section}{\numberline {4.2}Testes}{9}{section.29}%
-\contentsline {section}{\numberline {4.3}Avaliação da solução}{9}{section.30}%
-\contentsline {chapter}{\numberline {5}Conclusões}{11}{chapter.31}%
-\contentsline {section}{\numberline {5.1}Objetivos concretizados}{11}{section.32}%
-\contentsline {section}{\numberline {5.2}Limitações e trabalho futuro}{11}{section.33}%
-\contentsline {section}{\numberline {5.3}Apreciação final}{11}{section.34}%
-\contentsline {chapter}{Bibliografia}{13}{chapter*.35}%
-\contentsline {chapter}{\numberline {A}Título do Anexo}{15}{appendix.36}%
+\contentsline {subsection}{\numberline {1.2.1}Objetivos}{3}{subsection.15}%
+\contentsline {subsection}{\numberline {1.2.2}Abordagem}{3}{subsection.16}%
+\contentsline {subsection}{\numberline {1.2.3}Contributos}{3}{subsection.17}%
+\contentsline {subsection}{\numberline {1.2.4}Planeamento do Trabalho}{4}{subsection.18}%
+\contentsline {section}{\numberline {1.3}Estrutura do Relatório}{4}{section.19}%
+\contentsline {chapter}{\numberline {2}Estado da Arte}{7}{chapter.20}%
+\contentsline {section}{\numberline {2.1}Trabalhos Relacionados}{7}{section.21}%
+\contentsline {section}{\numberline {2.2}Tecnologias e Práticas Existentes}{7}{section.22}%
+\contentsline {chapter}{\numberline {3}Análise e Desenho da Solução}{9}{chapter.23}%
+\contentsline {section}{\numberline {3.1}Domínio do Problema}{9}{section.24}%
+\contentsline {section}{\numberline {3.2}Requisitos Funcionais e Não Funcionais}{9}{section.25}%
+\contentsline {section}{\numberline {3.3}Arquitetura da Solução}{9}{section.26}%
+\contentsline {chapter}{\numberline {4}Implementação da Solução}{11}{chapter.27}%
+\contentsline {section}{\numberline {4.1}Desenvolvimento do Backend}{11}{section.28}%
+\contentsline {section}{\numberline {4.2}Integração com o Serviço de Inteligência Artificial}{11}{section.29}%
+\contentsline {section}{\numberline {4.3}Estratégia de Testes}{11}{section.30}%
+\contentsline {section}{\numberline {4.4}Infraestrutura e Processo de Entrega}{11}{section.31}%
+\contentsline {chapter}{\numberline {5}Conclusões}{13}{chapter.32}%
+\contentsline {section}{\numberline {5.1}Objetivos Concretizados}{13}{section.33}%
+\contentsline {section}{\numberline {5.2}Limitações e Trabalho Futuro}{13}{section.34}%
+\contentsline {section}{\numberline {5.3}Apreciação Final}{13}{section.35}%
+\contentsline {chapter}{Bibliografia}{15}{chapter*.36}%
+\contentsline {chapter}{\numberline {A}Título do Anexo}{17}{appendix.37}%
